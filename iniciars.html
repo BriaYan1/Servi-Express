@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión y registrar usuario</title>
+  <link rel="stylesheet" href="styles1.css">
+  <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <nav>
+    
+            <div id="container_menu">
+    
+                <div id="container_mh">
+    
+                    <div id="container_logo">
+                        <div id="logo_menu">
+                            <img src="Img/logoiso.png" alt="Logo servi express" class="logo-img">
+                            <h2 class="logo-nom"><span>Servi</span>Express</h2>
+                        </div>
+                   </div>
+    
+                   <div class="container_pag">
+                        <a href="Index.html"> <p class="pagina"> Inicio </p> </a>
+                        <a href="Transporte.html"><P class="pagina"> Transporte </P> </a>
+                        <a href="Contactanos.html"> <P class="pagina"> Contactanos </P> </a>
+                        <a href="iniciars.html"> <P class="pagina"> Iniciar sesión </P> </a>
+                   </div>
+    
+                   <!------------ ESTE ES EL ICONO DEL MENU DESPLEGABLE ------------>
+    
+                   <div class="icono_m">
+                    <p>|||</p>
+                   </div>
+    
+                </div>
+            </div>
+        </nav>
+    
+    </header>
+
+  <div class="container">
+    <form id="inicio-sesion" class="login-form">
+      <img src="Login/Img/logoiso.png" alt="ServiExpress" class="logo">
+      <h1>Inicia Sesión</h1>
+      <input type="email" id="correo-login" placeholder="Correo electrónico" required>
+      <input type="password" id="contraseña-login" placeholder="Contraseña" required>
+      <a href="Index.html">  <button clickboard="Index.html" type=“submit”  >Ingresar</button> </a>
+      <div class="help-links">
+        <a href="#">¿Olvidaste tu contraseña?</a>
+        <a href="#" id="btn-registro">Crear cuenta</a>
+      </div>
+    </form>
+
+    <form id="registro" class="login-form">
+      <h1>Registrarse</h1>
+      <input type="text" id="nombre" placeholder="Usuario" required>
+      <input type="password" id="contraseña" placeholder="Contraseña" minlength="6" required>
+      <input type="email" id="correo" placeholder="Correo electrónico" required>
+      <button type="submit">Registrarse</button>
+      <div class="help-links">
+        <a href="#" id="btn-inicio">Iniciar sesión</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function registrarUsuario(evento) {
+      evento.preventDefault();
+      var nombre = document.getElementById("nombre").value;
+      var contraseña = document.getElementById("contraseña").value;
+      var correo = document.getElementById("correo").value;
+      var usuario = {
+        nombre: nombre,
+        contraseña: contraseña,
+        correo: correo
+      };
+      var usuarioJSON = JSON.stringify(usuario);
+      localStorage.setItem(usuario.correo, usuarioJSON);
+      alert("Usuario registrado con éxito");
+    }
+
+    function iniciarSesion(evento) {
+      evento.preventDefault();
+      var correoLogin = document.getElementById("correo-login").value;
+      var contraseñaLogin = document.getElementById("contraseña-login").value;
+      var usuarioJSON = localStorage.getItem(correoLogin);
+      if (usuarioJSON === null) {
+        alert("El usuario no existe. Regístrate primero.");
+      } else {
+        var usuario = JSON.parse(usuarioJSON);
+        if (usuario.contraseña === contraseñaLogin) {
+          alert("Inicio de sesión exitoso. ¡Bienvenido " + usuario.nombre + "!");
+        } else {
+          alert("Contraseña incorrecta. Intenta nuevamente.");
+        }
+      }
+    }
+
+    var formularioRegistro = document.getElementById("registro");
+    formularioRegistro.addEventListener("submit", registrarUsuario);
+
+    var formularioInicioSesion = document.getElementById("inicio-sesion");
+    formularioInicioSesion.addEventListener("submit", iniciarSesion);
+
+    var btnRegistro = document.getElementById("btn-registro");
+    var btnInicio = document.getElementById("btn-inicio");
+    var formRegistro = document.getElementById("registro");
+    var formInicioSesion = document.getElementById("inicio-sesion");
+
+    btnRegistro.addEventListener("click", function () {
+      formInicioSesion.style.display = "none";
+      formRegistro.style.display = "block";
+    });
+
+    btnInicio.addEventListener("click", function () {
+      formRegistro.style.display = "none";
+      formInicioSesion.style.display = "block";
+    });
+
+ 
+    var iconoMenu = document.querySelector(".icono_m");
+
+    function desplegarMenu(){
+        var menuDesplegable = document.querySelector(".container_pag");
+        menuDesplegable.classList.toggle("desplegar_menu");
+    
+    }
+    
+    iconoMenu.addEventListener("click", desplegarMenu);
+
+  </script>
+    <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="Login/Img/busico.ico" alt="Logo de ServiExpress">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Serviexpress es una empresa de transporte privada que ofrece servicios de calidad, seguridad y rapidez a sus clientes.</p>
+                <h2>UBICACIÓN</h2>
+                <p>Caracas</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">Diseñado por Crisly Velasco, Jheremy Mora, Alvaro Roman, Ender Rodriguez. <br> Contáctanos en ServiExpress@correofalso.com para cualquier consulta o sugerencia. <br>
+            <small>&copy; 2023 <b>Serviexpress</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+</body>
+</html>
